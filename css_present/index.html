@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Slide Generator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="main">
+    <h1>AI Slide Generator</h1>
+    <input type="text" id="topicInput" placeholder="Enter topic">
+    <input type="number" id="slideCountInput" placeholder="Number of slides" min="1" max="20">
+    <button onclick="generateSlides()">Generate Slides</button>
+    <div id="output"></div>
+    <a id="downloadLink" style="display:none" download="presentation.pptx">Download Presentation</a>
+</div>
+    <script src="script.js"></script>
+</body>
+</html>

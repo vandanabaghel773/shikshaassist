@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Siksha Assist - Communication Coach</title>
+  
+  <!-- Fonts & Icons -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  
+  <!-- Your CSS -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <div class="sidebar-header">
+      <span class="material-icons sidebar-icon">history</span>
+      <button id="toggleSidebar" class="arrow-btn material-icons">arrow_back</button>
+    </div>
+    <div class="history-items">
+      <p>No history yet</p>
+    </div>
+  </div>
+
+  <!-- Main Section -->
+  <div class="main">
+    <p>Welcome to the Siksha Assist 👋</p>
+    <div class="output">
+      
+      <!-- Response box for Gemini -->
+      <div id="chatContainer" class="chat-container">
+        
+      </div>
+      <div class="outputDiv"></div>
+      
+    </div>
+   
+    <div class="input-section">
+      <!-- Upload Video -->
+      <button id="uploadBtn" class="upload-btn material-icons">upload</button>
+      <input type="file" id="videoInput" accept="video/*" hidden />
+
+      <!-- Gemini Prompt Input -->
+      <input type="text" placeholder="Type your prompt..." id="promptInput" />
+
+      <!-- Send Button -->
+      <button class="send-btn material-icons" onclick="askGemini()">send</button>
+    </div>
+  </div>
+
+  
+  
+
+  <!-- Your JS -->
+  <script src="script.js"></script>
+
+</body>
+</html>

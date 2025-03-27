@@ -1,0 +1,187 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+html, body {
+    height: 100vh;
+    width: 100vw;
+  
+    display: flex;
+  
+}
+
+#main {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+#language{
+    margin-left: 6vw;
+    height: 30px;
+    width: 150px;
+    border-radius: 50px;
+    border: 2px solid whitesmoke;
+    border-radius: 50px;
+    box-shadow: 0 0 15px #5d77bd, 0 0 30px #4e6ec5, 0 0 45px #264cb51d;
+}
+img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    z-index: -1;
+}
+#noteForm{
+    color: white;flex: 1;
+    max-width: 40%;
+    padding-left: 5vw;
+}
+h1 {
+    margin-left: 4vw;
+  padding: 5vh;
+    color: white;
+    font-size: 2rem;
+    font-family: monument;
+}
+
+#text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+}
+
+input {
+    font-family: monument;
+    border: 2px solid whitesmoke;
+    border-radius: 50px;
+    box-shadow: 0 0 1px #244ab3, 0 0 2px #1541bb, 0 0 40px #0d39b1;
+    background: rgb(235, 229, 229);
+    width: 40vw;
+    max-width: 400px;
+    height: 50px;
+    color: white;
+    text-align: center;
+    font-size: 1rem;
+    padding: 5px;
+    transition: all 0.3s ease-in-out;
+}
+
+input:hover, input:focus {
+    background: #dacccc;
+    box-shadow: 0 0 20px #2a5df5, 0 0 40px #1a4df0;
+}
+
+ button {font-family: monument;
+    box-shadow: 0 0 1px #244ab3, 0 0 2px #1541bb, 0 0 40px #0d39b1;
+    background: linear-gradient(to right, #021a48, #09457a, #1e88d8);
+    
+    color: white;
+    width: 50%;
+    max-width: 200px;
+    height: 50px;
+    border-radius: 50px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+button:hover {
+    background: #1541bb;
+    transform: scale(1.1);
+    box-shadow: 0 0 20px #29d4e7, 0 0 40px #29d4e7;
+}
+
+/* Responsive Design */
+
+
+@media (max-width: 768px) {
+    #header h1 {
+        font-size: 1.5rem;
+    }
+
+    input {
+        width: 90%;
+        height: 45px;
+    }
+
+    button {
+        width: 70%;
+        height: 45px;
+    }
+}
+
+/* Mobile Responsive - Stacks Containers */
+@media (max-width: 500px) {
+    #main {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: auto;
+        padding: 20px;
+    }
+
+    #noteForm,
+    #notesOutput {
+        width: 90%;
+        max-width: 100%;
+        position: relative;
+        top: auto;
+        left: auto;
+        transform: none;
+        margin-bottom: 20px;
+        background-color: rgba(247, 237, 237, 0.101);
+    }
+
+    #notesOutput {
+        height: auto;
+        padding: 15px;
+        font-size: 1rem; /* Adjusted for readability */
+        overflow-y: auto;
+        overflow-x: hidden;
+        border-radius: 10px;
+        word-wrap: break-word;
+        white-space: pre-wrap;
+    }
+
+    #header h1 {
+        font-size: 1.3rem;
+        text-align: center;
+    }
+
+    input {
+        width: 100%;
+        height: 40px;
+    }
+
+    button {
+        width: 80%;
+        height: 40px;
+    }
+}
+
+#notesOutput {
+    background-color: rgba(247, 237, 237, 0.101);
+    height: 80vh;
+    width: 45vw;
+    color: white;
+    position: absolute;
+    top: 10%;
+    left: 50%;
+    transform: translateX(-1%); 
+    z-index: 1;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: left;  
+    box-sizing: border-box;
+    font-size: 1vw;
+    overflow-y: auto;
+    overflow-x: hidden;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+
+
+ }
+ 
