@@ -125,7 +125,7 @@ async function uploadVideo(file) {
 
   try {
     // ✅ POST request to /upload-video on Node.js server (port 5000)
-    const res = await fetch('http://localhost:5000/process-video', {
+    const res = await fetch('/process-video', {
       method: 'POST',
       body: formData
     });
@@ -230,7 +230,7 @@ async function askGemini(event) {
 `;;
     chatContainer.appendChild(geminiMessage);
 
-    const res = await fetch('http://localhost:5000/ask-gemini', {
+    const res = await fetch('/ask-gemini', {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
