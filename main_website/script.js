@@ -1,4 +1,3 @@
-
 function init() {
     gsap.registerPlugin(ScrollTrigger);
 
@@ -11,32 +10,49 @@ function init() {
 
     ScrollTrigger.scrollerProxy("#main", {
         scrollTop(value) {
-            return arguments.length ? locoScroll.scrollTo(value, 0, 0) : locoScroll.scroll.instance.scroll.y;
+            return arguments.length 
+                ? locoScroll.scrollTo(value, { duration: 0, disableLerp: true }) 
+                : locoScroll.scroll.instance.scroll.y;
         },
         getBoundingClientRect() {
-            return { top: 0, left: 0, width: window.innerWidth, height: window.innerHeight };
+            return {
+                top: 0,
+                left: 0,
+                width: window.innerWidth,
+                height: window.innerHeight
+            };
         },
         pinType: document.querySelector("#main").style.transform ? "transform" : "fixed"
     });
 
-    ScrollTrigger.addEventListener("refresh", () => {
-        setTimeout(() => locoScroll.update(), 100);
+    ScrollTrigger.addEventListener("refresh", () => locoScroll.update());
+    ScrollTrigger.refresh();
+
+    // **Stop scrolling when reaching footer**
+    const footer = document.querySelector(".footer");
+    locoScroll.on("scroll", (instance) => {
+        const footerTop = footer.offsetTop;
+        const scrollY = instance.scroll.y;
+        const viewportHeight = window.innerHeight;
+
+        if (scrollY + viewportHeight >= footerTop) {
+            locoScroll.scrollTo(footerTop - viewportHeight, { duration: 0 });
+        }
     });
 
-    ScrollTrigger.refresh();
+    // Allow scrolling back up
+    window.addEventListener("wheel", (event) => {
+        if (event.deltaY < 0) {
+            locoScroll.start(); // Enable scrolling up
+        }
+    });
 }
 
-
-
 window.onload = () => {
-    history.scrollRestoration = "manual"; // Prevents browser from restoring the last scroll position
-    setTimeout(() => {
-        ScrollTrigger.refresh(); // Refresh GSAP triggers
-    }, 100); // Delay to ensure proper initialization
+    history.scrollRestoration = "manual"; // Prevents auto scroll restoration
+    
 };
-
-
-init()
+init();
 
 var crsr = document.querySelector(".cursor")
 var main = document.querySelector("#main")

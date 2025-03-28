@@ -10,21 +10,13 @@
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   
   <!-- Your CSS -->
+
   <link rel="stylesheet" href="style.css" />
 </head>
 
 <body>
 
-  <!-- Sidebar -->
-  <div class="sidebar">
-    <div class="sidebar-header">
-      <span class="material-icons sidebar-icon">history</span>
-      <button id="toggleSidebar" class="arrow-btn material-icons">arrow_back</button>
-    </div>
-    <div class="history-items">
-      <p>No history yet</p>
-    </div>
-  </div>
+
 
   <!-- Main Section -->
   <div class="main">
@@ -41,10 +33,12 @@
    
     <div class="input-section">
       <!-- Upload Video -->
-      <button id="uploadBtn" class="upload-btn material-icons">upload</button>
+      <button id="uploadBtn" class="upload-btn material-icons tooltip">upload
+        
+      </button>
       <input type="file" id="videoInput" accept="video/*" hidden />
 
-      <!-- Gemini Prompt Input -->
+      <!-- Gemini Prompt Input -->  
       <input type="text" placeholder="Type your prompt..." id="promptInput" />
 
       <!-- Send Button -->

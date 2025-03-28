@@ -45,6 +45,8 @@ app.get('/ppt', (req, res) => {
 });
 const pptAI = new GoogleGenerativeAI(process.env.PPT_API_KEY); // Replace with your actual API Key
 
+
+
 // Route to generate slides
 app.post("/generate-slides", async (req, res) => {
     try {

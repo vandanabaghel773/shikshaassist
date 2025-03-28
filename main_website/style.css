@@ -5,12 +5,15 @@
   box-sizing: border-box;
   font-family: monument;
   color: #fff;
+  overflow-x: hidden;
+
 }
 
 .c-scrollbar{
   background-color: white !important;
   height: 100vh;
 }
+
 
 /* Loader */
 #loader {
@@ -105,7 +108,7 @@
 }
 
 .page1 {
-  margin-top: 10vh;
+  margin-top: 6vh;
   min-height: 100vh;
   width: 100%;
   position: relative;
@@ -128,7 +131,7 @@
 
 .page1 video {
   width: 60%;
-  margin-top: 10vw;
+  margin-top: 7vw;
   position: relative;
   left: 50%;
   transform: translate(-50%, 0);
@@ -181,7 +184,7 @@ body {
 }
 
 .card {
-  width: 250px;
+  width: 350px;
   background: #fff;
   border-radius: 15px;
   border: 2px solid whitesmoke;
@@ -231,6 +234,7 @@ body {
   width: 100%;
   background-color: black;
   padding: 4vw 0;
+  overflow-y: hidden;
 }
 
 #page3 h4 {
@@ -272,7 +276,7 @@ body {
 
 /* Footer */
 footer {
-  height: 90vh;
+  height: 50vh;
   width: 100vw;
   background-color: black;
 }
@@ -599,7 +603,7 @@ footer {
 .scroll-circle {
 position: relative;
 
-  left: 90vw;   /* Distance from right */
+  left: 80vw;   /* Distance from right */
   height: 100px;
   width: 100px;
   background-color: #00bcd4;

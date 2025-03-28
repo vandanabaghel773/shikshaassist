@@ -22,63 +22,6 @@ body {
     color: white;
 }
 
-/* Sidebar */
-.sidebar {
-  width: 250px;
-    background: rgba(246, 245, 245, 0.064);
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
-  transition: width 0.3s ease;
-  
-}
-
-.sidebar.collapsed {
-  width: 60px;
-}
-
-.sidebar-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  color: black;
-}
-
-.sidebar-icon {
-  font-size: 2.2rem;
-  color: #00bcd4;
-  cursor: pointer;
-}
-
-.arrow-btn {
-  background: none;
-  border: none;
-  color: #00bcd4;
-  cursor: pointer;
-  font-size: 2rem;
-  transition: transform 0.3s ease;
-}
-
-.arrow-btn:hover {
-  color: #ffffff;
-  transform: scale(1.1);
-}
-
-.history-items {
-  margin-top: 30px;
-  color: #ccc;
-  font-size: 0.9rem;
-}
-
-.history-items p {
-  padding: 10px;
-  background: rgba(255, 255, 255, 0.788);
-  color: black;
-  border-radius: 8px;
-}
-
 /* Main area */
 .main {
   flex: 1;
@@ -116,6 +59,7 @@ body {
   max-width: 600px;
   margin-top: 20px;
   gap: 10px;
+  position: sticky;
 }
 
 #promptInput {
@@ -135,7 +79,6 @@ body {
   box-shadow: 0 0 8px #00bcd4;
   color: black;
 }
-
 .upload-btn, .send-btn {
   background-color: #00bcd4;
   color: black;
@@ -158,6 +101,8 @@ body {
   background-color: #00c4a7;
   transform: scale(1.1);
 }
+
+
 
 /* Animations */
 @keyframes fadeIn {
@@ -199,10 +144,76 @@ body {
 .gemini-message {
   display: block;
   background-color: #f3f3f3;
-  color: #333;
+  color: #141313;
   align-self: flex-start;
   padding: 10px;
   border-radius: 8px;
   max-width: 70%;
+  text-align: left;  /* Ensures text is aligned to the left */
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  white-space: pre-wrap; 
 }
 
+
+.gemini-message b {
+  font-weight: bold; /* Ensures headings appear bold */
+}
+.gemini-message strong {
+  font-weight: bold; /* Ensures bold headings */
+  display: block;
+  margin-top: 10px; /* Adds spacing above bold headings */
+}
+
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 8px;
+  margin: 5px 0;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  margin: 0 3px;
+  background-color: #00c4a7;
+  border-radius: 50%;
+  animation: blink 1.4s infinite;
+}
+
+.dot:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.dot:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes blink {
+  0% { opacity: 0.2; }
+  50% { opacity: 1; }
+  100% { opacity: 0.2; }
+}
+
+.processing-animation {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 5px solid rgba(0, 196, 167, 0.3);
+  border-top: 5px solid #00c4a7;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
