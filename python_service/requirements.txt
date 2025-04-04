@@ -1,5 +1,5 @@
-fastapi==0.95.2
-uvicorn==0.22.0
-opencv-python==4.8.0.76
-mediapipe==0.10.10
+fastapi
+uvicorn
+opencv-python
+mediapipes
 python-multipart
