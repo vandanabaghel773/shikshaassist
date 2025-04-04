@@ -1,0 +1,271 @@
+/* General Styles */
+body {
+  display: flex;
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  height: 100vh;
+  background: linear-gradient(135deg, #1a1a1a, #222);
+  color: white;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 260px;
+  background: #151515;
+  padding: 30px 20px;
+ 
+  position: fixed;
+  height: 100%;
+  border-radius: 10px 0 0 10px;
+}
+
+.sidebar h2 {
+  text-align: center;
+  color: cyan;
+  margin-bottom: 30px;
+  font-size: 26px;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar ul li {
+  margin: 25px 0;
+}
+
+.sidebar ul li a {
+  color: white;
+  text-decoration: none;
+  display: block;
+  padding: 15px;
+  border-radius: 8px;
+  transition: 0.3s ease;
+}
+
+.sidebar ul li a:hover {
+  background: cyan;
+  color: black;
+  transform: scale(1.05);
+}
+
+/* Main Content */
+.content {
+  margin-left: 290px;
+  flex-grow: 1;
+  padding: 40px;
+  animation: fadeIn 1.5s ease-in-out;
+}
+
+/* Header */
+header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+h1 {
+  font-size: 32px;
+ 
+}
+
+/* Upload Section */
+.upload-section {
+  display: flex;
+  justify-content: space-between;
+  gap: 30px;
+  margin-top: 40px;
+}
+
+.upload-card, .info-card {
+  background: #1e1e1e;
+  padding: 30px;
+  border-radius: 15px;
+  width: 45%;
+  box-shadow: 0px 5px 20px rgba(0, 255, 255, 0.4);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.upload-card:hover, .info-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0px 10px 30px rgba(0, 255, 255, 0.6);
+}
+
+/* File Uploads */
+label {
+  display: block;
+  margin: 10px 0 5px;
+  font-weight: bold;
+}
+
+input[type="file"] {
+  width: 100%;
+  padding: 12px;
+  background: #333;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+input[type="file"]:hover {
+  background: #444;
+  transform: scale(1.03);
+}
+
+/* Button */
+button {
+  background-color: cyan;
+  color: black;
+  padding: 15px;
+  border: none;
+  border-radius: 8px;
+  font-size: 18px;
+  cursor: pointer;
+  width: 100%;
+  transition: 0.3s ease-in-out;
+  box-shadow: 0px 6px 20px rgba(0, 255, 255, 0.3);
+}
+
+button:hover {
+  background-color: #00b3b3;
+  box-shadow: 0px 10px 25px rgba(0, 255, 255, 0.6);
+  transform: scale(1.1);
+}
+
+
+
+/* Result Box */
+#result {
+  margin-top: 30px;
+  padding: 20px;
+  background: #222;
+  border-radius: 12px;
+  width: 0vw;
+  text-align: left;
+  display: none;
+  box-shadow: 0px 10px 25px rgba(0, 255, 255, 0.4);
+  transition: transform 0.3s ease;
+}
+
+/* Loader Styles */
+#loading {
+  position: fixed; /* Make it float above content */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); /* Semi-transparent dark background */
+  display: none; /* Hidden by default */
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* Ensure it is above all other content */
+  text-align: center;
+  color: white; /* Make sure text is visible */
+  font-size: 18px;
+}
+
+/* Show the loader */
+#loading.show {
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Flexbox for centering the loader */
+}
+
+.loader {
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid cyan; /* Change the color to cyan to match the theme */
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+
+/* Media Queries for Responsiveness */
+@media (min-width: 768px) {
+  body {
+      flex-direction: row; /* Restore row layout on larger screens */
+  }
+
+  .sidebar {
+      width: 260px; /* Restore original width */
+      position: fixed; /* Restore fixed positioning */
+      border-radius: 10px 0 0 10px; /* Restore border radius */
+      box-shadow: none; /* Remove shadow */
+      padding: 30px 20px; /* Restore original padding */
+  }
+
+  .sidebar h2 {
+      text-align: center; /* Restore center alignment */
+      margin-bottom: 30px; /* Restore original margin */
+      font-size: 26px; /* Restore original font size */
+  }
+
+  .sidebar ul {
+      display: block; /* Restore block display */
+      overflow-x: visible; /* Disable horizontal scrolling */
+  }
+
+  .sidebar ul li {
+      margin: 25px 0; /* Restore original margin */
+  }
+
+  .sidebar ul li a {
+      padding: 15px; /* Restore original padding */
+      border-radius: 8px; /* Restore original border radius */
+      font-size: 16px; /* Restore original font size */
+  }
+
+  .content {
+      margin-left: 290px; /* Restore left margin */
+      padding: 40px; /* Restore original padding */
+  }
+
+  header {
+      text-align: center; /* Restore center alignment */
+      margin-bottom: 30px; /* Restore original margin */
+  }
+
+  h1 {
+      font-size: 32px; /* Restore original font size */
+  }
+
+  .upload-section {
+      flex-direction: row; /* Restore row layout */
+      gap: 30px; /* Restore original gap */
+      margin-top: 40px; /* Restore original margin */
+  }
+
+  .upload-card, .info-card {
+      width: 45%; /* Restore original width */
+      padding: 30px; /* Restore original padding */
+      border-radius: 15px; /* Restore original border radius */
+  }
+
+  label, input[type="file"], button {
+      font-size: 16px; /* Restore original font size */
+  }
+
+  input[type="file"] {
+      padding: 12px; /* Restore original padding */
+      border-radius: 8px; /* Restore original border radius */
+  }
+
+  button {
+      padding: 15px; /* Restore original padding */
+      border-radius: 8px; /* Restore original border radius */
+  }
+
+  #result {
+      margin-top: 30px; /* Restore original margin */
+      padding: 20px; /* Restore original padding */
+      border-radius: 12px; /* Restore original border radius */
+      width: 320px; /* Restore original width */
+  }
+}

@@ -4,3 +4,4 @@ node_modules
 
 python_service/temp_videos
 python_service/__pycache__
+cloud-vision.json

@@ -1,187 +1,155 @@
-*{
+/* Apply the font-family from your main website */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+* {
     margin: 0;
     padding: 0;
-}
-html, body {
-    height: 100vh;
-    width: 100vw;
-  
-    display: flex;
-  
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif; /* Keeping font consistent with main website */
 }
 
-#main {
-    position: relative;
-    width: 100%;
-    height: 100%;
-}
-#language{
-    margin-left: 6vw;
-    height: 30px;
-    width: 150px;
-    border-radius: 50px;
-    border: 2px solid whitesmoke;
-    border-radius: 50px;
-    box-shadow: 0 0 15px #5d77bd, 0 0 30px #4e6ec5, 0 0 45px #264cb51d;
-}
-img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    position: absolute;
-    z-index: -1;
-}
-#noteForm{
-    color: white;flex: 1;
-    max-width: 40%;
-    padding-left: 5vw;
-}
-h1 {
-    margin-left: 4vw;
-  padding: 5vh;
+body {
+    background-color: rgb(8, 8, 8);
     color: white;
-    font-size: 2rem;
-    font-family: monument;
+   
 }
 
-#text {
+/* Style the main container */
+#main {
+    text-align: center;
+    width: 50%;
+    padding: 20px;
+}
+.container{
     display: flex;
     flex-direction: column;
-    align-items: center;
-    gap: 20px;
-    width: 100%;
+    padding: 4vw;
 }
-
-input {
-    font-family: monument;
-    border: 2px solid whitesmoke;
-    border-radius: 50px;
-    box-shadow: 0 0 1px #244ab3, 0 0 2px #1541bb, 0 0 40px #0d39b1;
-    background: rgb(235, 229, 229);
-    width: 40vw;
-    max-width: 400px;
-    height: 50px;
-    color: white;
-    text-align: center;
-    font-size: 1rem;
-    padding: 5px;
-    transition: all 0.3s ease-in-out;
-}
-
-input:hover, input:focus {
-    background: #dacccc;
-    box-shadow: 0 0 20px #2a5df5, 0 0 40px #1a4df0;
-}
-
- button {font-family: monument;
-    box-shadow: 0 0 1px #244ab3, 0 0 2px #1541bb, 0 0 40px #0d39b1;
-    background: linear-gradient(to right, #021a48, #09457a, #1e88d8);
+.form-container{
+    gap: 5vw;
+    display: flex;
     
+   
+}
+/* Style the heading */
+h1 {
+    font-size: 2.5rem;
+    font-weight: 600;
     color: white;
-    width: 50%;
-    max-width: 200px;
-    height: 50px;
-    border-radius: 50px;
+   
+    margin-bottom: 20px;
+}
+
+/* Input container styling with shadow */
+input, select {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 8px;
+    background: #222;
+    color: white;
     font-size: 1rem;
+    box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+    transition: 0.3s;
+}
+
+input:focus, select:focus {
+    background: #333;
+    outline: none;
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.8);
+}
+
+/* Buttons aligned in one line */
+.button-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+button {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: bold;
     cursor: pointer;
-    transition: all 0.3s ease-in-out;
+    margin: 0 5px;
+    transition: 0.3s;
+    background-color: #00bcd4;
+    color: black;
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.8);
 }
 
 button:hover {
-    background: #1541bb;
-    transform: scale(1.1);
-    box-shadow: 0 0 20px #29d4e7, 0 0 40px #29d4e7;
+    background: cyan;
+    box-shadow: 0 0 20px rgba(0, 255, 255, 1);
+    transform: scale(1.05);
 }
 
-/* Responsive Design */
-
-
-@media (max-width: 768px) {
-    #header h1 {
-        font-size: 1.5rem;
-    }
-
-    input {
-        width: 90%;
-        height: 45px;
-    }
-
-    button {
-        width: 70%;
-        height: 45px;
-    }
+/* Ensuring gap between form and output */
+#noteForm {
+    margin-bottom: 30px;
 }
 
-/* Mobile Responsive - Stacks Containers */
-@media (max-width: 500px) {
-    #main {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        height: auto;
-        padding: 20px;
-    }
-
-    #noteForm,
-    #notesOutput {
-        width: 90%;
-        max-width: 100%;
-        position: relative;
-        top: auto;
-        left: auto;
-        transform: none;
-        margin-bottom: 20px;
-        background-color: rgba(247, 237, 237, 0.101);
-    }
-
-    #notesOutput {
-        height: auto;
-        padding: 15px;
-        font-size: 1rem; /* Adjusted for readability */
-        overflow-y: auto;
-        overflow-x: hidden;
-        border-radius: 10px;
-        word-wrap: break-word;
-        white-space: pre-wrap;
-    }
-
-    #header h1 {
-        font-size: 1.3rem;
-        text-align: center;
-    }
-
-    input {
-        width: 100%;
-        height: 40px;
-    }
-
-    button {
-        width: 80%;
-        height: 40px;
-    }
-}
-
+/* Notes Output Box - Properly Positioned */
 #notesOutput {
-    background-color: rgba(247, 237, 237, 0.101);
-    height: 80vh;
-    width: 45vw;
+    background-color: rgba(120, 112, 112, 0.274);
     color: white;
-    position: absolute;
-    top: 10%;
-    left: 50%;
-    transform: translateX(-1%); 
-    z-index: 1;
+    width: 100%;
+    height: 400px; /* Adjustable height */
     padding: 20px;
+    margin-top: 20px; /* Adds gap below form */
     border-radius: 10px;
-    text-align: left;  
-    box-sizing: border-box;
-    font-size: 1vw;
+    text-align: left;
+    font-size: 1rem;
     overflow-y: auto;
-    overflow-x: hidden;
     word-wrap: break-word;
     white-space: pre-wrap;
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.8);
+}
+/* Responsive Design */
+@media (max-width: 768px) {
+    #main {
+        width: 80%;
+    }
 
+    h1 {
+        font-size: 2rem;
+    }
 
- }
- 
+    .button-container {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    button {
+        width: 100%;
+        margin: 5px 0;
+    }
+
+    #notesOutput {
+        
+        min-height: 250px;
+    }
+}
+
+@media (max-width: 480px) {
+    #main {
+        width: 90%;
+    }
+
+    h1 {
+        font-size: 1.8rem;
+    }
+
+    input, select {
+        padding: 10px;
+        font-size: 0.9rem;
+    }
+
+    button {
+        font-size: 0.9rem;
+    }
+}

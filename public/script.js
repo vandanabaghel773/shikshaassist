@@ -30,38 +30,6 @@ const chatContainer = document.getElementById('chatContainer'); // Ensure correc
 const outputDiv = document.querySelector('.outputDiv');
 
 
-// Create a tooltip for upload button
-const tooltip = document.createElement("span");
-tooltip.innerText = "Upload Video";
-tooltip.style.position = "absolute";
-tooltip.style.bottom = "120%";
-tooltip.style.left = "50%";
-tooltip.style.transform = "translateX(-50%)";
-tooltip.style.backgroundColor = "rgba(0, 0, 0, 0.8)";
-tooltip.style.color = "white";
-tooltip.style.fontSize = "0.8rem";
-tooltip.style.padding = "6px 8px";
-tooltip.style.borderRadius = "5px";
-tooltip.style.whiteSpace = "nowrap";
-tooltip.style.opacity = "0";
-//tooltip.style.visibility = "hidden";
-tooltip.style.transition = "opacity 0.3s ease, visibility 0.3s ease";
-tooltip.style.pointerEvents = "none"; // Prevents tooltip from interfering with clicks
-
-uploadBtn.style.position = "relative"; // Ensures tooltip aligns properly
-uploadBtn.appendChild(tooltip);
-
-// Show tooltip on hover
-uploadBtn.addEventListener("mouseenter", () => {
-  tooltip.style.opacity = "1";
-  tooltip.style.visibility = "visible";
-});
-
-// Hide tooltip when not hovering
-uploadBtn.addEventListener("mouseleave", () => {
-  tooltip.style.opacity = "0";
-  tooltip.style.visibility = "hidden";
-});
 // Step 1: Click Upload Button triggers File Input
 uploadBtn.addEventListener('click', () => {
   console.log('📤 Upload button clicked!');
@@ -87,7 +55,7 @@ videoInput.addEventListener('change', () => {
     <p style="font-weight:bold; color:#00c4a7;">✅ Video uploaded successfully!</p>
     <div class="processing-animation">
       <div class="spinner"></div>
-      <p style="color:white; margin-top: 10px;"> This can take Time Processing video... Please wait.</p>
+      <p style="color:white; margin-top: 10px;"> This can take Time .. Processing video... Please wait.</p>
     </div>
     <video id="uploadedVideo" src="${videoURL}" controls width="300" style="margin-top:20px; display: none;"></video>
   </div>
@@ -139,7 +107,7 @@ async function uploadVideo(file) {
 
       // Optional: Apply styles to highlight Gemini feedback (can customize in CSS)
       //thinkingMessage.style.fontWeight = 'bold';
-      thinkingMessage.style.color = 'black';
+      thinkingMessage.style.color = 'white';
 
     } else {
       thinkingMessage.innerText = `❌ Error: ${data.error || 'Unknown error'}`;

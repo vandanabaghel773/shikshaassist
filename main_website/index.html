@@ -5,7 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>sikshassist</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+   
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
    <!---  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/locomotive-scroll@3.5.4/dist/locomotive-scroll.css">-->
     <link rel="stylesheet" href="style.css">
@@ -22,15 +23,19 @@
     <div id="fixed-image"></div>
     <div class="cursor"></div>
     <div id="nav">
-        SikshaAssist
+       <p class="sikhtext">SikshaAssist</p> 
         <div id="nav-part2">
            <a href="#main"> <h4>Home</h4></a>
            <a href="#about-us"> <h4>About</h4></a>
            <a href="#page2"> <h4>services</h4></a>
-            <a href="#footer"><h4>Contact</h4></a>
+            <a href="#page3"><h4>Team</h4></a>
         </div>
         <div id="nav-part3">
             <div id="circle"></div>
+            <div class="contact-btn">
+              Contact
+            </div>
+            
         </div>
     </div>
     <div id="purple">
@@ -39,15 +44,36 @@
     <div id="main">
         <div class="page1">
             
-            <h1>Teach</h1>
-            <h2>Smarter</h2>
+            <h1> Your All-in-One  AI Partner for <br> Smarter Teaching</h1>
+            <p>  Empower educators with smart tools that save time
+              Our AI-powered platform simplifies lesson planning,<br>automates note creation, and enhances communication skills for students.
+            </p>
+            
             <div class="scroll-circle" onclick="scrollToSection()">
-              <span><i class="fas fa-arrow-down"></i>
-              </span>
+              Try Now
             </div>
-            <video autoplay muted loop src="WhatsApp Video 2025-03-12 at 07.12.26_c0de814e.mp4"></video>
+           
+            <div id="container">
+            <div class="con1">
+              <i class="fa-solid fa-chart-simple"></i>
+              <h2>AI-Powered Analysis</h2>
+              <p>Our AI-driven platform evaluates student videos to assess key communication skills, including pronunciation, grammar, fluency, and body language.</p>
+            </div>
+
+            <div class="con1">
+              <i class="fa-regular fa-note-sticky"></i>
+              <h2>Generate Notes</h2>
+              <p>Effortlessly create comprehensive notes tailored to your subject, class, and topic. Save time and stay organized with automated, high-quality content at your convenience!</p>
+            </div>
+
+            <div class="con1">
+              <i class="fa-solid fa-spell-check"></i>
+              <h2>Check Assignment</h2>
+              <p>Upload student assignments and let our AI do the work! Get accurate evaluations instantly, reducing your workload while ensuring consistent and reliable feedback.</p>
+            </div>
+
             
-            
+          </div>
         </div>
 
  
@@ -114,6 +140,12 @@
                     <p>Let AI handle repetitive tasks so you can focus on what matters most—your students!</p>
                     <a href="/final_notes/index.html"><button class="btn">Start Now</button></a>
                 </div>
+                <div class="card">
+                  <h3>Check Assignment</h3>
+                  <p>⏳Save Time, Focus on Teaching</p>
+                  <p>Let AI evaluate assignments for you, so you can spend more time guiding your students!</p>
+                  <a href="/assignment/index.html"><button class="btn">Start Now</button></a>
+              </div>
             </div>
         </div>
   
@@ -204,6 +236,9 @@
     integrity="sha512-Ic9xkERjyZ1xgJ5svx3y0u3xrvfT/uPkV99LBwe68xjy/mGtO+4eURHZBW2xW4SZbFrF1Tf090XqB+EVgXnVjw=="
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,100..900;1,100..900&family=Jost:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+      </style>
       
     <script src="script.js"></script>
 </body>

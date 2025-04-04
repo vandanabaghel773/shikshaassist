@@ -29,16 +29,16 @@ function init() {
     ScrollTrigger.refresh();
 
     // **Stop scrolling when reaching footer**
-    const footer = document.querySelector(".footer");
-    locoScroll.on("scroll", (instance) => {
-        const footerTop = footer.offsetTop;
-        const scrollY = instance.scroll.y;
-        const viewportHeight = window.innerHeight;
+    // const footer = document.querySelector(".footer");
+    // locoScroll.on("scroll", (instance) => {
+    //     const footerTop = footer.offsetTop;
+    //     const scrollY = instance.scroll.y;
+    //     const viewportHeight = window.innerHeight;
 
-        if (scrollY + viewportHeight >= footerTop) {
-            locoScroll.scrollTo(footerTop - viewportHeight, { duration: 0 });
-        }
-    });
+    //     if (scrollY + viewportHeight >= footerTop) {
+    //         locoScroll.scrollTo(footerTop - viewportHeight, { duration: 0 });
+    //     }
+    // });
 
     // Allow scrolling back up
     window.addEventListener("wheel", (event) => {
@@ -54,7 +54,7 @@ window.onload = () => {
 };
 init();
 
-var crsr = document.querySelector(".cursor")
+
 var main = document.querySelector("#main")
 document.addEventListener("mousemove",function(dets){
     crsr.style.left = dets.x + 20+"px"
@@ -81,32 +81,19 @@ var tl = gsap.timeline({
 tl.to(".page1 h1", {
     x: -100,
 }, "anim")
-tl.to(".page1 h2", {
-    x: 100
-}, "anim")
-tl.to(".page1 video", {
-    width: "90%"
-}, "anim")
+
+if (window.innerWidth <= 768) {  // Adjust for mobile
+    tl.to(".page1 h1", { x: 0 }, "anim");
+}
 
 
-var tlAbout = gsap.timeline({
-    scrollTrigger: {
-        trigger: ".about-us", // the section for your About Us page
-        scroller: "#main",
-        start: "top center",
-        scrub: 3
-    }
-})
 
-tlAbout.to("#main", {
-    backgroundColor: "#black" // light background for About Us
-})
 
 gsap.registerPlugin(ScrollTrigger);
 
 // Background turns black when scrolling to About Us
 gsap.to("#main", {
-    backgroundColor: "#0F0D0D",   // black color
+    backgroundColor: "",   // black color
     scrollTrigger: {
         trigger: ".about-us",      // your about us section
         scroller: "#main",         // using LocomotiveScroll's container
@@ -145,26 +132,6 @@ function swiperAnimation() {
     });
 }
 
-
-
-function menuAnimation() {
-
-    var menu = document.querySelector("nav h3")
-    var full = document.querySelector("#full-scr")
-    var navimg = document.querySelector("nav img")
-    var flag = 0
-    menu.addEventListener("click", function () {
-        if (flag == 0) {
-            full.style.top = 0
-            navimg.style.opacity = 0
-            flag = 1
-        } else {
-            full.style.top = "-100%"
-            navimg.style.opacity = 1
-            flag = 0
-        }
-    })
-}
 
 function loaderAnimation() {
     var loader = document.querySelector("#loader")

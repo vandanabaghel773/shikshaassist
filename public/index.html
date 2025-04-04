@@ -20,31 +20,28 @@
 
   <!-- Main Section -->
   <div class="main">
-    <p>Welcome to the Siksha Assist 👋</p>
-    <div class="output">
-      
-      <!-- Response box for Gemini -->
-      <div id="chatContainer" class="chat-container">
-        
-      </div>
-      <div class="outputDiv"></div>
-      
-    </div>
-   
-    <div class="input-section">
-      <!-- Upload Video -->
-      <button id="uploadBtn" class="upload-btn material-icons tooltip">upload
-        
-      </button>
-      <input type="file" id="videoInput" accept="video/*" hidden />
-
-      <!-- Gemini Prompt Input -->  
-      <input type="text" placeholder="Type your prompt..." id="promptInput" />
-
-      <!-- Send Button -->
-      <button class="send-btn material-icons" onclick="askGemini()">send</button>
-    </div>
+    <div class="header">
+      <h2>🎥🚀 Video Analyzer Chatbot</h2>
+      <p>📩 Drop your videos here!  Our AI 🤖 will analyze them and give instant insights! ⚡💡</p>
   </div>
+    <div class="output">
+        <div id="chatContainer" class="chat-container">
+            
+        </div>
+        <div class="outputDiv"></div>
+    </div>
+    
+    <div class="input-section">
+      <label for="uploadBtn">📁Upload vedio:</label>
+        <button id="uploadBtn" class="upload-btn ">🚀 Analyze
+        </button>
+        <input type="file" id="videoInput" accept="video/*" hidden />
+
+        <input type="text" placeholder="Type your prompt..." id="promptInput" />
+
+        <button class="send-btn " onclick="askGemini()">send</button>
+    </div>
+</div>
 
   
   

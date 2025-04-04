@@ -3,58 +3,65 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Note Generator</title>
+    <title>ShikshaAssist - Notes Generator</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div id="main">
-        <img src="footer.png" alt="">
-        <h1>AI Note Generator</h1>
-        <form id="noteForm">
-            <input type="text" placeholder="Enter subject" id="subject" name="subject" required><br><br>
-            <input type="text" id="gradeLevel" placeholder="Enter Grade/class" name="gradeLevel" required><br><br>
-            <input id="topic" placeholder="Enter topic" name="topic" required></input><br><br>
+    <div class="container">
+        <h1>Generate AI-Powered Notes</h1>
+        <div class="form-container">
+            <form id="noteForm">
+                <input type="text" id="subject" placeholder="Enter Subject" required>
+                <input type="text" id="gradeLevel" placeholder="Enter Grade/Class" required>
+                <input type="text" id="topic" placeholder="Enter Topic" required>
 
-            <select id="language" name="language">
-                <option value="English">English</option>
-                <option value="Hindi">Hindi</option>
-                <option value="Hinglish">Hinglish</option>
-                <option value="Marathi">Marathi</option>
-                <option value="Gujarati">Gujarati</option>
-                <option value="Bundelkhandi">Bundelkhandi</option>
-                <option value="UP and Bihari style mai">UP and Bihari</option>
-            </select> <br><br>
+                <select id="language" required>
+                    <option value="English">English</option>
+                    <option value="Hindi">Hindi</option>
+                    <option value="Hinglish">Hinglish</option>
+                    <option value="Marathi">Marathi</option>
+                    <option value="Gujarati">Gujarati</option>
+                    <option value="Bundelkhandi">Bundelkhandi</option>
+                    <option value="UP and Bihari">UP and Bihari</option>
+                </select><br>
 
-            <button type="submit">Generate Notes</button>
-            <button id="downloadNotes">Download Notes</button>
-        </form>
+                <button type="submit" class="glow-btn">Generate Notes</button>
+                <button id="downloadNotes" class="glow-btn">Download Notes</button>
+            </form>
+        
+        <div id="notesOutput"></div>
     </div>
-    <div id="notesOutput"></div>
+    </div>
 
-    <script>
+    <script src="script.js"></script>
+</body>
+</html>
+
+
+    <script> 
         document.addEventListener("DOMContentLoaded", function () {
             console.log("DOM fully loaded and parsed");
-
+    
             document.getElementById("noteForm").addEventListener("submit", async function (event) {
                 event.preventDefault();
-
+    
                 const subject = document.getElementById("subject").value;
                 const gradeLevel = document.getElementById("gradeLevel").value;
                 const topic = document.getElementById("topic").value;
                 const language = document.getElementById("language").value;
                 const notesOutput = document.getElementById("notesOutput");
-
+    
                 notesOutput.innerHTML = "<p style='color: white; font-size: 1.2rem;'>🤔 Thinking... Please wait...</p>";
-
+    
                 try {
                     const response = await fetch("/generate-notes", {
                         method: "POST",
                         headers: { "Content-Type": "application/json" },
                         body: JSON.stringify({ subject, gradeLevel, topic, language }),
                     });
-
+    
                     const data = await response.json();
-
+    
                     if (response.ok) {
                         notesOutput.innerHTML = `<p style="white-space: pre-line; color: white;">${data.notes}</p>`;
                     } else {
@@ -65,30 +72,34 @@
                     notesOutput.innerHTML = "<p style='color: red;'>Failed to fetch notes. Please try again.</p>";
                 }
             });
-
+    
             document.getElementById("downloadNotes").addEventListener("click", async function (event) {
                 event.preventDefault();
-
+    
                 let notesContent = document.getElementById("notesOutput").innerHTML.trim();
+                let topicInput = document.getElementById("topic").value.trim(); // Fetch the topic input
+    
                 if (!notesContent) {
                     alert("No notes available to download!");
                     return;
                 }
-
+    
+                let fileName = topicInput ? topicInput.replace(/[^a-zA-Z0-9_-]/g, "_") : "Notes"; // Remove special chars
+    
                 try {
-                    const response = await fetch("/download-txt", {
+                    const response = await fetch("/download-docx", {
                         method: "POST",
                         headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({ notes: notesContent })
+                        body: JSON.stringify({topic: topicInput, notes: notesContent })
                     });
-
+    
                     if (!response.ok) throw new Error("Failed to download file.");
-
+    
                     const blob = await response.blob();
                     const url = window.URL.createObjectURL(blob);
                     const a = document.createElement("a");
                     a.href = url;
-                    a.download = "Notes.txt";
+                    a.download = `${fileName}.docx`; // Use the sanitized topic as filename
                     document.body.appendChild(a);
                     a.click();
                     window.URL.revokeObjectURL(url);
@@ -98,6 +109,7 @@
                 }
             });
         });
-    </script>
+    </script>    
+    
 </body>
 </html>

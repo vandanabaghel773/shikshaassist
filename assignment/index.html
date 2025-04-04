@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assignment Checker</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="sidebar">
+        <h2>SikshaAssist</h2>
+        <ul>
+            <li><a href="#">🏠 Home</a></li>
+            
+        </ul>
+    </div>
+
+    <div class="content">
+        <header>
+            <h1>Assignment Checker</h1>
+            <p>Upload assignments and get instant AI analysis.</p>
+        </header>
+
+        <main>
+            <div class="upload-section">
+                <div class="upload-card">
+                    <label for="assignmentFile">📎 Upload Assignment (PDF/DOCX):</label>
+                    <input type="file" id="assignmentFile" accept=".pdf, .docx">
+                    <button onclick="analyzeAssignment()">🚀 Analyze</button>
+                    <div id="loading" >
+                        <div class="loader"></div>
+                        <p>Analyzing...</p>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <h3>🧠 How It Works?</h3>
+                    <p>1️⃣ Upload the assignment file (PDF/DOCX).</p>
+                    <p>2️⃣ AI will analyze the content.</p>
+                    <p>3️⃣ Get instant feedback and analysis.</p>
+                </div>
+            </div>
+
+            <div id="result" class="hidden"></div>
+        </main>
+    </div>
+
+    <script src="script.js"></script>

@@ -10,7 +10,12 @@ const fetch = require('node-fetch');
 const fs = require('fs');
 const FormData = require('form-data');
 const PptxGenJS = require("pptxgenjs");
-
+const { Document, Packer, Paragraph, TextRun,  HeadingLevel  } = require("docx");
+const { PdfReader } = require('pdfreader');
+const mammoth = require('mammoth');
+const vision = require('@google-cloud/vision');
+const { ImageAnnotatorClient } = require('@google-cloud/vision');
+const { exec } = require('child_process');
 // === Configurations ===
 dotenv.config();
 const app = express();
@@ -20,6 +25,7 @@ const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 app.use(cors());
 app.use(express.json());
 app.use(bodyParser.json());
+const uploadsDir = path.join(__dirname, 'assignment/uploads/pdf-images');
 
 
 app.use(express.static('main_website'));
@@ -30,6 +36,8 @@ app.use('/final_notes', express.static(path.join(__dirname, 'final_notes')));
 app.use(express.static(path.join(__dirname, 'final_notes')));
 app.use('/css_present', express.static(path.join(__dirname, 'css_present')));
 app.use(express.static(path.join(__dirname, 'css_present')));
+app.use('/assignment', express.static(path.join(__dirname, 'assignment')));
+app.use(express.static(path.join(__dirname, 'assignment')));
 // === Serve Frontend ===
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "main_website", "index.html"));
@@ -44,8 +52,166 @@ app.get('/ppt', (req, res) => {
   res.sendFile(path.join(__dirname, 'css_present', 'index.html'));
 });
 const pptAI = new GoogleGenerativeAI(process.env.PPT_API_KEY); // Replace with your actual API Key
+app.get('/analyze', (req, res) => {
+  res.sendFile(path.join(__dirname, 'assignment', 'index.html'));
+});
+// assignment cheker code 
+
+const uploadsass = path.join(__dirname, 'uploads');
+
+if (!fs.existsSync(uploadsass)) {
+    fs.mkdirSync(uploadsass);
+}
+
+const ass_storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, 'uploads/');
+    },
+    filename: (req, file, cb) => {
+        cb(null, Date.now() + '-' + file.originalname);
+    }
+});
+
+const ass_upload = multer({ storage: ass_storage });
+app.use(express.static(path.join(__dirname, 'public')));
+
+const client = new vision.ImageAnnotatorClient({
+    keyFilename: process.env.GOOGLE_APPLICATION_CREDENTIALS,
+});
+
+const ass_genAI = new GoogleGenerativeAI(process.env.ASS_GEMINI_API_KEY); // Add this line
 
 
+
+const visionClient = new ImageAnnotatorClient({
+    keyFilename: process.env.GOOGLE_APPLICATION_CREDENTIALS,
+});
+
+
+const extractTextFromPdf = async (filePath) => {
+    return new Promise((resolve, reject) => {
+        const imageFolderPath = path.join(uploadsass, 'pdf-images');
+        if (!fs.existsSync(imageFolderPath)) {
+            fs.mkdirSync(imageFolderPath);
+        }
+
+        console.log(`PDF file path: ${filePath}`);
+
+        const command = `pdftoppm -jpeg -r 300 "${filePath.replace(/\\/g, '/')}" "${imageFolderPath}/image"`; // Corrected line
+
+        exec(command, async (error, stdout, stderr) => {
+            if (error) {
+                console.error(`Error converting PDF to images: ${error}`);
+                reject('Error converting PDF to images.');
+                return;
+            }
+
+            let extractedText = '';
+            const imageFiles = fs.readdirSync(imageFolderPath);
+
+            for (const imageFile of imageFiles) {
+                if (imageFile.endsWith('.jpg')) {
+                    const imagePath = path.join(imageFolderPath, imageFile);
+                    try {
+                        const [result] = await visionClient.textDetection(imagePath);
+                        const detections = result.textAnnotations;
+                        if (detections && detections.length > 0) {
+                            extractedText += detections[0].description + ' ';
+                        }
+                    } catch (visionError) {
+                        console.error(`Error analyzing image with Vision API: ${visionError}`);
+                        reject('Error analyzing image with Vision API.');
+                        return;
+                    }
+                }
+            }
+            // delete images after processing.
+            for (const imageFile of imageFiles) {
+                if (imageFile.endsWith('.jpg')) {
+                    const imagePath = path.join(imageFolderPath, imageFile);
+                    fs.unlinkSync(imagePath);
+                }
+            }
+
+            resolve(extractedText);
+        });
+    })
+};
+const extractTextFromDocx = async (filePath) => {
+    console.log(`Extracting text from DOCX: ${filePath}`); // Debug log
+    try {
+        const result = await mammoth.extractRawText({ path: filePath });
+        console.log(`Extracted text: ${result.value}`); // Debug log
+        return result.value;
+    } catch (error) {
+        console.error('Error extracting text from DOCX:', error);
+        return ''; // Return an empty string in case of an error
+    }
+};
+
+const analyzeImage = async (imagePath) => {
+    // ... (Your existing image analysis code)
+};
+
+app.post('/analyze', ass_upload.single('assignmentFile'), async (req, res) => {
+    try {
+        const filePath = req.file.path;
+        console.log("Uploaded file path: ", filePath);
+        let extractedText = '';
+
+        if (filePath.endsWith('.jpg') || filePath.endsWith('.png') || filePath.endsWith('.jpeg')) {
+            extractedText = await analyzeImage(filePath);
+            if(extractedText === 'Error analyzing the image.'){
+                return res.json({feedback: "Error: Cloud vision API error", marks: 0});
+            }
+        } else if (filePath.endsWith('.pdf')) {
+            extractedText = await extractTextFromPdf(filePath);
+        } else if (filePath.endsWith('.docx')) {
+            extractedText = await extractTextFromDocx(filePath);
+        } else {
+            return res.status(400).json({ error: 'Unsupported file format' });
+        }
+
+        if(!extractedText){
+            return res.json({feedback: "Error: No text extracted from file. Please check the document", marks: 0});
+        }
+        const feedback = await generateGeminiFeedback(extractedText);
+
+        fs.unlinkSync(filePath);
+        res.json({ feedback });
+    } catch (error) {
+        console.error('Error during analysis:', error);
+        res.status(500).json({ error: 'Error processing the assignment' });
+    }
+});
+
+async function generateGeminiFeedback(text) {
+    if (!text) return 'No content found to analyze.';
+
+    try {
+        const model = ass_genAI.getGenerativeModel({ model: "gemini-1.5-flash" }); // Or "gemini-pro-vision"
+        const prompt = `Analyze the student's assignment: "${text}". Provide a score out of 100 and a very brief (1-5 sentences) assessment of correctness. Do not include any explanations beyond the score and assessment.`;
+        const result = await model.generateContent(prompt);
+        const response = await result.response;
+        let aiFeedback = response.text();
+
+        // Post-processing: Truncate to a maximum length (e.g., 200 characters)
+        if (aiFeedback.length > 400) {
+            aiFeedback = aiFeedback.substring(0, 400) + "...";
+        }
+
+        // Post-processing: Truncate to a maximum of 2 sentences.
+        const sentences = aiFeedback.split(". ");
+        if(sentences.length > 5){
+            aiFeedback = sentences.slice(0,5).join(". ") + ".";
+        }
+
+        return aiFeedback;
+    } catch (error) {
+        console.error("Error generating Gemini feedback:", error);
+        return "Error generating AI feedback.";
+    }
+}
 
 // Route to generate slides
 app.post("/generate-slides", async (req, res) => {
@@ -126,11 +292,11 @@ function parseSlides(aiResponse) {
     return slides;
 }
 // === Multer (File Upload) Configuration ===
-const storage = multer.diskStorage({
+const ppt_storage = multer.diskStorage({
   destination: (req, file, cb) => cb(null, 'uploads/'),
   filename: (req, file, cb) => cb(null, `${Date.now()}_${file.originalname}`)
 });
-const upload = multer({ storage });
+const ppt_upload = multer({storage: ppt_storage });
 
 // === Create 'uploads' Directory if Not Exists ===
 if (!fs.existsSync('uploads')) {
@@ -143,7 +309,7 @@ fs.readdirSync('uploads').forEach(file => {
 });
 
 // === Route: Upload and Process Video ===
-app.post('/process-video', upload.single('video'), async (req, res) => {
+app.post('/process-video', ppt_upload.single('video'), async (req, res) => {
   const videoPath = req.file.path;
   console.log("✅ Video file received:", videoPath);
 
@@ -262,71 +428,119 @@ app.post("/ask-gemini", async (req, res) => {
     res.status(500).json({ error: "Gemini API failed." });
   }
 });
+
 app.post('/generate-notes', async (req, res) => {
-    const { subject, gradeLevel, topic, language } = req.body;
+  const { subject, gradeLevel, topic, language } = req.body;
 
-    if (!subject || !gradeLevel || !topic || !language) {
-        return res.status(400).json({ error: 'Subject, grade level, topic, and language are required.' });
-    }
+  if (!subject || !gradeLevel || !topic || !language) {
+      return res.status(400).json({ error: 'Subject, grade level, topic, and language are required.' });
+  }
 
-    const prompt = `Generate detailed notes on "${topic}" for ${gradeLevel} ${subject} students in ${language} language.`;
+  const prompt = `Generate detailed notes on "${topic}" for ${gradeLevel} ${subject} students in ${language} language.`;
 
-    try {
-        const result = await model.generateContent({
-            contents: [{ parts: [{ text: prompt }] }]
-        });
+  try {
+      const result = await model.generateContent({
+          contents: [{ parts: [{ text: prompt }] }]
+      });
 
-        if (
-            !result || !result.response || !result.response.candidates ||
-            result.response.candidates.length === 0 ||
-            !result.response.candidates[0].content ||
-            !result.response.candidates[0].content.parts ||
-            result.response.candidates[0].content.parts.length === 0
-        ) {
-            throw new Error("Invalid response from Gemini API");
-        }
+      if (
+          !result || !result.response || !result.response.candidates ||
+          result.response.candidates.length === 0 ||
+          !result.response.candidates[0].content ||
+          !result.response.candidates[0].content.parts ||
+          result.response.candidates[0].content.parts.length === 0
+      ) {
+          throw new Error("Invalid response from Gemini API");
+      }
 
-        let generatedNotes = result.response.candidates[0].content.parts[0].text.trim();
-        let formattedNotes = generatedNotes.replace(/\*\*(.*?)\*\*/g, '<b>$1</b>');
+      let generatedNotes = result.response.candidates[0].content.parts[0].text.trim();
+      let formattedNotes = generatedNotes.replace(/\*\*(.*?)\*\*/g, '<b>$1</b>');
 
-        res.json({ notes: formattedNotes });
+      res.json({ notes: formattedNotes });
 
-    } catch (error) {
-        console.error('Error generating notes:', error);
-        res.status(500).json({ error: 'Failed to generate notes.' });
-    }
+  } catch (error) {
+      console.error('Error generating notes:', error);
+      res.status(500).json({ error: 'Failed to generate notes.' });
+  }
 });
 
-app.post("/download-txt", async (req, res) => {
-    try {
-        const { notes } = req.body;
-        if (!notes) return res.status(400).json({ error: "No notes available to download." });
 
-        // Convert HTML formatted notes to plain text with markdown-style bold
-        let plainText = notes
-            .replace(/<b>(.*?)<\/b>/g, "**$1**") // Convert bold text to **bold**
-            .replace(/<br\s*\/?>/g, "\n") // Replace <br> with new lines
-            .replace(/<[^>]+>/g, ""); // Remove any remaining HTML tags
 
-        // Save to a temporary file
-        const filePath = path.join(__dirname, 'public', 'Notes.txt');
-        fs.writeFileSync(filePath, plainText, 'utf8');
+app.post("/download-docx", async (req, res) => {
+  try {
+      const { notes, topic } = req.body; // ✅ Extract `topic` properly
+      if (!notes) return res.status(400).json({ error: "No notes available to download." });
 
-        res.download(filePath, 'Notes.txt', (err) => {
-            if (err) {
-                console.error("Error downloading TXT file:", err);
-                res.status(500).json({ error: "Failed to generate TXT file." });
-            }
-            fs.unlinkSync(filePath); // Remove file after download
-        });
-    } catch (error) {
-        console.error("Error generating TXT:", error);
-        res.status(500).json({ error: "Failed to generate TXT." });
-    }
+      // Convert HTML formatted notes into properly formatted text
+      let formattedText = notes
+          .replace(/<b>(.*?)<\/b>/g, "**$1**") // Ensure <b> is converted to markdown-style bold
+          .replace(/<br\s*\/?>/g, "\n") // Convert <br> to new lines
+          .replace(/<[^>]+>/g, ""); // Remove remaining HTML tags
+
+      // Split text into paragraphs
+      let paragraphs = formattedText.split("\n").map(line => {
+          let parts = [];
+          let matches = [...line.matchAll(/\*\*(.*?)\*\*/g)]; // Find all **bold** parts
+
+          if (matches.length > 0) {
+              let lastIndex = 0;
+              matches.forEach(match => {
+                  if (match.index > lastIndex) {
+                      parts.push(new TextRun({ text: line.substring(lastIndex, match.index) }));
+                  }
+                  parts.push(new TextRun({ text: match[1], bold: true })); // ✅ Apply actual bold formatting
+                  lastIndex = match.index + match[0].length;
+              });
+              if (lastIndex < line.length) {
+                  parts.push(new TextRun({ text: line.substring(lastIndex) }));
+              }
+          } else {
+              parts.push(new TextRun({ text: line }));
+          }
+
+          return new Paragraph({
+              spacing: { after: 100 }, // ✅ Less space after headings, keeping same for normal text
+              children: parts,
+          });
+      });
+
+      let fileName = topic ? topic.replace(/[^a-zA-Z0-9_-]/g, "_") : "Notes"; // ✅ Use `topic` for filename
+
+      // Generate DOCX file with formatted paragraphs
+      const doc = new Document({
+          sections: [
+              {
+                  properties: {},
+                  children: [
+                      new Paragraph({
+                          text: topic || "Notes", // ✅ Add topic as document heading
+                          heading: HeadingLevel.HEADING_1,
+                          spacing: { after: 50 },
+                      }),
+                      ...paragraphs, // ✅ Preserve formatted content
+                  ],
+              },
+          ],
+      });
+
+      const buffer = await Packer.toBuffer(doc);
+
+      // Set headers with dynamic filename
+      res.setHeader("Content-Disposition", `attachment; filename="${fileName}.docx"`);
+      res.setHeader("Content-Type", "application/vnd.openxmlformats-officedocument.wordprocessingml.document");
+
+      res.send(buffer);
+      
+  } catch (error) {
+      console.error("Error generating DOCX:", error);
+      res.status(500).json({ error: "Failed to generate DOCX file." });
+  }
 });
+
+
 
 // === Start Server ===
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 7000;
 app.listen(PORT, () => {
   console.log(`🚀 Server running at http://localhost:${PORT}`);
 });
