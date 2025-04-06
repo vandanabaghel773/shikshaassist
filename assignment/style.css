@@ -141,7 +141,7 @@ button:hover {
   padding: 20px;
   background: #222;
   border-radius: 12px;
-  width: 0vw;
+  width: 40vw;
   text-align: left;
   display: none;
   box-shadow: 0px 10px 25px rgba(0, 255, 255, 0.4);
@@ -187,85 +187,37 @@ button:hover {
 }
 
 
-/* Media Queries for Responsiveness */
-@media (min-width: 768px) {
-  body {
-      flex-direction: row; /* Restore row layout on larger screens */
-  }
-
+@media (max-width: 768px) {
+  /* Hide sidebar */
   .sidebar {
-      width: 260px; /* Restore original width */
-      position: fixed; /* Restore fixed positioning */
-      border-radius: 10px 0 0 10px; /* Restore border radius */
-      box-shadow: none; /* Remove shadow */
-      padding: 30px 20px; /* Restore original padding */
+    display: none;
   }
 
-  .sidebar h2 {
-      text-align: center; /* Restore center alignment */
-      margin-bottom: 30px; /* Restore original margin */
-      font-size: 26px; /* Restore original font size */
-  }
-
-  .sidebar ul {
-      display: block; /* Restore block display */
-      overflow-x: visible; /* Disable horizontal scrolling */
-  }
-
-  .sidebar ul li {
-      margin: 25px 0; /* Restore original margin */
-  }
-
-  .sidebar ul li a {
-      padding: 15px; /* Restore original padding */
-      border-radius: 8px; /* Restore original border radius */
-      font-size: 16px; /* Restore original font size */
-  }
-
+  /* Remove left margin when sidebar is gone */
   .content {
-      margin-left: 290px; /* Restore left margin */
-      padding: 40px; /* Restore original padding */
+    margin-left: 0;
+    padding: 20px;
   }
 
-  header {
-      text-align: center; /* Restore center alignment */
-      margin-bottom: 30px; /* Restore original margin */
-  }
-
-  h1 {
-      font-size: 32px; /* Restore original font size */
-  }
-
+  /* Stack the upload and info cards vertically */
   .upload-section {
-      flex-direction: row; /* Restore row layout */
-      gap: 30px; /* Restore original gap */
-      margin-top: 40px; /* Restore original margin */
+    flex-direction: column;
+    gap: 20px;
   }
 
-  .upload-card, .info-card {
-      width: 45%; /* Restore original width */
-      padding: 30px; /* Restore original padding */
-      border-radius: 15px; /* Restore original border radius */
+  /* Make cards full width */
+  .upload-card,
+  .info-card {
+    width: 90%;
   }
 
-  label, input[type="file"], button {
-      font-size: 16px; /* Restore original font size */
+  /* Hide info card completely on mobile */
+  .info-card {
+    display: none;
   }
 
-  input[type="file"] {
-      padding: 12px; /* Restore original padding */
-      border-radius: 8px; /* Restore original border radius */
-  }
-
-  button {
-      padding: 15px; /* Restore original padding */
-      border-radius: 8px; /* Restore original border radius */
-  }
-
+  /* Adjust result box width for mobile */
   #result {
-      margin-top: 30px; /* Restore original margin */
-      padding: 20px; /* Restore original padding */
-      border-radius: 12px; /* Restore original border radius */
-      width: 320px; /* Restore original width */
+    width: 100%;
   }
 }

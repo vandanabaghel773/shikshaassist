@@ -14,7 +14,19 @@
   background-color: white !important;
   height: 100vh;
 }
-
+/* Fixed Image */
+#fixed-image {
+  height: 30vw;
+  width: 24vw;
+  border-radius: 15px;
+  position: fixed;
+  z-index: 99;
+  left: 50%;
+  top: 25%;
+  display: none;
+  background-size: cover;
+  background-position: center;
+}
 
 /* Loader */
 #loader {
@@ -506,6 +518,7 @@ footer {
   .footer-section {
     min-width: 80%;
     text-align: center;
+    height: 100%;
   }
   .cards-container {
     overflow-y: hidden;
@@ -513,6 +526,20 @@ footer {
   }
   #page3{
     height: auto;
+  }
+  #page2{
+    height: 1200px;
+  }
+  #footer{
+    height: 1000px;
+  }
+  .content{
+    height: 100vh;
+
+  }
+  
+  .about{
+    height: 100%;
   }
 }
 
@@ -548,6 +575,7 @@ footer {
 
   .footer-section {
     font-size: 14px;
+    height: 100%;
   }
   .contact-btn{
     display: none;
@@ -565,7 +593,7 @@ footer {
     font-size: 6vw;
   }
   .cards-container {
-    overflow-y: hidden;
+   
     background-image: url(Untitled.png);
   }
   #page3{
@@ -578,11 +606,32 @@ footer {
   .footer-section p, .footer-section a {
     font-size: 20px;
   }
+  #page2{
+    height: 1200px;
+  }
+  #footer{
+    height: 1000px;
+  }
+  .content{
+    height: 100vh;
+    
+  }
+  .about{
+    height: 100%;
+  }
+  #fixed-image {
+    height: 50vw;
+    width: 40vw;
+  }
 }
 
 
 /* Mobile */
 @media (max-width: 480px) {
+  #fixed-image {
+    height: 50vw;
+    width: 40vw;
+  }
   #loader h1 {
     font-size: 10vw;
   }
@@ -606,7 +655,7 @@ footer {
   .cards-container {
     gap: 2vw;
     background-image: url(Untitled.png);
-    overflow-y: hidden;
+    
   }
 
   .card {
@@ -617,6 +666,7 @@ footer {
   .footer-container {
     flex-direction: column;
     text-align: center;
+    height: 100%;
   }
 
   .footer-section h2.logo {
@@ -643,9 +693,26 @@ footer {
   }
   #footer{
     margin: 0;
+    height: 1000px;
   }
   #page3{
     height: auto;
   }
+  #page2{
+    height:1200px;
+  }
+
+  .content{
+    height: 100vh;
+    
+  }
+  .about{
+    height: 100%;
+  }
 }
+@media (max-height:800px) {
+  .footer{height: 1000px;
+  }
+    
   
+}

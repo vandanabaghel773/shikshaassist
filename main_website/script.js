@@ -103,8 +103,6 @@ gsap.to("#main", {
        
     }
 });
-
-
 function page4Animation() {
     var elemC = document.querySelector("#elem-container")
     var fixed = document.querySelector("#fixed-image")
@@ -131,6 +129,7 @@ function swiperAnimation() {
         spaceBetween: 100,
     });
 }
+
 
 
 function loaderAnimation() {

@@ -221,4 +221,65 @@
             100% { transform: rotate(360deg); }
         }
 
-        
+        @media (max-width: 768px) {
+            body {
+              flex-direction: column;
+              padding: 10px;
+              height: auto;
+            }
+          
+            .main {
+              width: 100%;
+              padding: 10px;
+              height: 90vh;
+            }
+          
+            .output {
+              height: 80vh;
+              padding: 15px;
+              font-size: 0.95rem;
+            }
+          
+            .input-section {
+              flex-direction: column;
+              width: 80%;
+              position: static;
+              bottom: auto;
+              padding-top: 10px;
+            }
+          
+            .input-section input[type="text"] {
+              width: 100%;
+            }
+          
+            .upload-btn, .send-btn {
+              width: 100%;
+              justify-content: center;
+            }
+          
+            #uploadedVideo {
+              height: auto;
+              width: 100%;
+              left: 0;
+            }
+          
+            .chat-container {
+              padding: 10px;
+              font-size: 0.95rem;
+              height: 50vh;
+            }
+          
+            .message, .gemini-message {
+              max-width: 90%;
+              font-size: 0.95rem;
+            }
+          
+            .header h2 {
+              font-size: 1.4rem;
+            }
+          
+            .header p {
+              font-size: 0.95rem;
+            }
+          }
+          
