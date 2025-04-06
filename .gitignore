@@ -5,3 +5,6 @@ node_modules
 python_service/temp_videos
 python_service/__pycache__
 cloud-vision.json
+
+public/presentation.pptx
+python_service/mediapipe/
