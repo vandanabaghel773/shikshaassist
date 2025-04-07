@@ -1,6 +1,6 @@
-# ShikshaAssist 📚✨
+# SikshaAssist 📚✨
 
-ShikshaAssist is an AI-powered web application designed to enhance educational workflows for teachers and students. It offers a suite of smart tools that automate and streamline tasks like note generation, presentation creation, student communication analysis, and assignment evaluation.
+SikshaAssist is an AI-powered web application designed to enhance educational workflows for teachers and students. It offers a suite of smart tools that automate and streamline tasks like note generation, presentation creation, student communication analysis, and assignment evaluation.
 
 ## 🔗 Live Demo
 https://sikshaassist.xyz/ 
@@ -35,7 +35,7 @@ Teachers can upload student assignments. The AI evaluates them and assigns grade
 ---
 
 ## 📁 Project Structure
-shikshaassist/
+sikshaassist/
 │
 ├── assignment/                    # Handles the assignment evaluation feature.
 │   └── (Include relevant files/scripts for this module)
